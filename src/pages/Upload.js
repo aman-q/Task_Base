@@ -15,6 +15,7 @@ import {
 } from "firebase/storage";
 import { getDatabase, ref } from "firebase/database";
 import { app } from "../config/firebbasedb";
+import Papa from 'papaparse';
 
 function UploadPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -24,6 +25,7 @@ function UploadPage() {
   const [activePage, setActivePage] = useState("Dashboard");
   const [theme, setTheme] = useState('dark');
   const [isLight, setIsLight] = useState(false);
+  const [data , setdata]=useState([]);
 
   useEffect(() => {
       const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -61,46 +63,25 @@ function UploadPage() {
       setFile(event.target.files[0]);
     }
   };
-
+  const parseCSV = (file) => {
+    Papa.parse(file, {
+      complete: (results) => {
+        console.log('Parsed CSV data:', results.data);
+        setdata(results.data);
+        // Now you can store this data in Firebase Realtime Database
+        //storeDataInDatabase(results.data);
+      },
+      header: true,
+    });
+  };
+  
+  
   const handleUpload = () => {
     if (!file) {
       alert("Please select a file first!");
       return;
     }
-
-    setIsLoading(true);
-
-    const storage = getStorage(app);
-    const storageReference = storageRef(storage, `uploads/${file.name}`);
-
-    const uploadTask = uploadBytesResumable(storageReference, file);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload is ${progress}% done`);
-      },
-      (error) => {
-        console.error("Upload failed:", error);
-        alert("Upload failed: " + error.message);
-        setIsLoading(false);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref)
-          .then((downloadURL) => {
-            console.log("File available at", downloadURL);
-            // Handle success, such as saving the URL to your Realtime Database
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            console.error("Error getting download URL:", error);
-            alert("Error getting download URL: " + error.message);
-            setIsLoading(false);
-          });
-      }
-    );
+       parseCSV(file);
   };
 
   return (
@@ -206,7 +187,7 @@ function UploadPage() {
             {isSidebarOpen && <span className="ml-4">Settings</span>}
           </a>
         </nav>
-        <div className=" mt-80"> {/* Adjust margin as needed */}
+        <div className=" mt-64"> {/* Adjust margin as needed */}
           <label className="relative inline-flex items-center cursor-pointer">
             <input
               type="checkbox"
@@ -302,32 +283,29 @@ function UploadPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {uploads.length > 0 ? (
-                      uploads.map((upload, index) => (
+                    {data.length > 0 ? (
+                      data.map((upload, index) => (
                         <tr key={index} className="border-b border-gray-700">
                           <td className="py-2 px-4 text-gray-200">{index + 1}</td>
                           <td className="py-2 px-4 text-blue-400">
                             <a
-                              href={upload.url}
+                              href={upload.links}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              {upload.url}
+                              {upload.links}
                             </a>
                           </td>
                           <td className="py-2 px-4 text-gray-200">{upload.prefix}</td>
                           <td className="py-2 px-4 text-gray-200">
                             <select
                               className="bg-gray-700 text-gray-200 p-2 rounded-lg"
-                              value={upload.selectedTag}
+                              value={upload.selectedtag}
                               onChange={(e) => handleTagChange(e, index)}
                             >
                               <option value="">Select Tags</option>
-                              <option value="Tag 1">Tag 1</option>
-                              <option value="Tag 2">Tag 2</option>
-                              <option value="Tag 3">Tag 3</option>
-                              <option value="Tag 4">Tag 4</option>
-                              <option value="Tag 5">Tag 5</option>
+                             { upload?.['selected tags']?.map((val,i)=>{return(<option value={val}>{val}</option>)})}
+                              
                             </select>
                           </td>
                           <td className="py-2 px-4 text-gray-200">
