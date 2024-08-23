@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "../asset/logo.svg";
+import { Link } from "react-router-dom";
 import invoiceIcon from "../asset/invoiceIcon.svg";
 import scheduleIcon from "../asset/scheduleIcon.svg";
 import calendarIcon from "../asset/calendarIcon.svg";
@@ -183,69 +184,69 @@ function UploadPage() {
           </button>
         </div>
         <nav className="mt-10">
-          <a
-            href="#"
+          <Link
+            to="/upload"
             onClick={() => setActivePage("Dashboard")}
             className={`flex items-center py-3 px-4 ml-2 text-gray-200 hover:bg-blue-600 hover:text-white transition-colors ${activePage === "Dashboard" ? "bg-blue-600 text-white" : ""
               }`}
           >
             <img src={dashboardIcon} alt="Dashboard" className="w-[17px] h-[17px]" />
             {isSidebarOpen && <span className="ml-4">Dashboard</span>}
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/upload"
             onClick={() => setActivePage("Uploads")}
             className={`flex items-center py-3 px-4 ml-2 text-gray-200 hover:bg-blue-600 hover:text-white transition-colors ${activePage === "Uploads" ? "bg-blue-600 text-white" : ""
               }`}
           >
             <img src={uploadIcon} alt="Uploads" className="w-[17px] h-[17px]" />
             {isSidebarOpen && <span className="ml-4">Uploads</span>}
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/upload"
             onClick={() => setActivePage("Invoice")}
             className={`flex items-center py-3 px-4 ml-2 text-gray-200 hover:bg-blue-600 hover:text-white transition-colors ${activePage === "Invoice" ? "bg-blue-600 text-white" : ""
               }`}
           >
             <img src={invoiceIcon} alt="Invoice" className="w-[17px] h-[17px]" />
             {isSidebarOpen && <span className="ml-4">Invoice</span>}
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/upload"
             onClick={() => setActivePage("Schedule")}
             className={`flex items-center py-3 px-4 ml-2 text-gray-200 hover:bg-blue-600 hover:text-white transition-colors ${activePage === "Schedule" ? "bg-blue-600 text-white" : ""
               }`}
           >
             <img src={scheduleIcon} alt="Schedule" className="w-[17px] h-[17px]" />
             {isSidebarOpen && <span className="ml-4">Schedule</span>}
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/upload"
             onClick={() => setActivePage("Calendar")}
             className={`flex items-center py-3 px-4 ml-2 text-gray-200 hover:bg-blue-600 hover:text-white transition-colors ${activePage === "Calendar" ? "bg-blue-600 text-white" : ""
               }`}
           >
             <img src={calendarIcon} alt="Calendar" className="w-[17px] h-[17px]" />
             {isSidebarOpen && <span className="ml-4">Calendar</span>}
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/upload"
             onClick={() => setActivePage("Notification")}
             className={`flex items-center py-3 px-4 ml-2 text-gray-200 hover:bg-blue-600 hover:text-white transition-colors ${activePage === "Notification" ? "bg-blue-600 text-white" : ""
               }`}
           >
             <img src={notificationIcon} alt="Notification" className="w-[17px] h-[17px]" />
             {isSidebarOpen && <span className="ml-4">Notification</span>}
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/upload"
             onClick={() => setActivePage("Settings")}
             className={`flex items-center py-3 px-4 ml-2 text-gray-200 hover:bg-blue-600 hover:text-white transition-colors ${activePage === "Settings" ? "bg-blue-600 text-white" : ""
               }`}
           >
             <img src={settingsIcon} alt="Settings" className="w-[17px] h-[17px]" />
             {isSidebarOpen && <span className="ml-4">Settings</span>}
-          </a>
+          </Link>
         </nav>
         <div className=" mt-64"> {/* Adjust margin as needed */}
           <label className="relative inline-flex items-center cursor-pointer">

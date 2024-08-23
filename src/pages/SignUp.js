@@ -33,9 +33,11 @@ export default function Signup() {
         setIsLight(!isLight);
     };
 
-    if (isAuthenticated) {
-        navigate('/upload');
-    }
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/upload');
+        }
+    }, [isAuthenticated, navigate]);
 
     return (
         <div className={`flex flex-col md:flex-row h-screen ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-white text-black'} p-4`}>
@@ -53,7 +55,7 @@ export default function Signup() {
                         </h1>
                     </div>
                     <div className="flex items-center">
-                    <div className=" mt-80"> {/* Adjust margin as needed */}
+                        <div className="mt-80"> {/* Adjust margin as needed */}
                             <label className="relative inline-flex items-center cursor-pointer">
                                 <input
                                     type="checkbox"
@@ -66,13 +68,7 @@ export default function Signup() {
                             </label>
                         </div>
                         <img src={image} alt="Person with camera" className="h-80 ml-[17.5rem] mt-12" />
-
-                        
                     </div>
-
-
-
-
                 </div>
             </div>
 
@@ -123,9 +119,6 @@ export default function Signup() {
                     <Link to="/"><img src={linkedin} alt="LinkedIn" className="w-6 h-6" /></Link>
                     <Link to="/"><img src={discord} alt="Discord" className="w-6 h-6" /></Link>
                 </div>
-
-
-
             </div>
         </div>
     );
