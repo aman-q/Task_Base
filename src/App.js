@@ -10,8 +10,8 @@ function App() {
     <KindeProvider
       clientId="6c9e7b479d9d4ff59de25bb692530098"
       domain="https://aman092.kinde.com"
-      redirectUri="http://localhost:3000"
-      logoutUri="http://localhost:3000"
+      redirectUri="https://task-base.vercel.app/"
+      logoutUri="https://task-base.vercel.app/"
     >
       <Routes>
         <Route path="/" element={<SignUp />} />
